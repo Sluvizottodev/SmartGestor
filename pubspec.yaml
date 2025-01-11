@@ -1,0 +1,44 @@
+name: controle_vendas_e_estoque
+description: "App para gestão de estoque eficiente"
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.4
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+
+  # Gerenciamento de estado
+  provider: ^6.1.5
+
+  # Integração com Firebase
+  firebase_core: ^3.9.2
+  firebase_auth: ^4.8.2
+  cloud_firestore: ^4.9.1
+
+  # Formulários e validações
+  #flutter_form_builder: ^8.1.1
+
+  # Ícones adicionais
+  font_awesome_flutter: ^10.4.0
+
+  # Gráficos para relatórios
+  #fl_chart: ^0.54.0
+
+  # Gerar IDs únicos
+  uuid: ^3.0.7
+
+  # Formatação de números e datas
+  intl: ^0.18.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
