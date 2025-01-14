@@ -1,7 +1,11 @@
+import 'package:controle_vendas_e_estoque/controllers/company_controller.dart';
+import 'package:controle_vendas_e_estoque/controllers/product_controller.dart';
+import 'package:controle_vendas_e_estoque/models/product_model.dart';
+import 'package:controle_vendas_e_estoque/view/product_creation_screen.dart';
+import 'package:controle_vendas_e_estoque/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/user_provider.dart';
-import '../controllers/company_controller.dart';  // Importando o controlador para buscar dados
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -11,7 +15,9 @@ class HomeScreen extends StatelessWidget {
     final userProvider = Provider.of<UserProvider>(context);
 
     if (userProvider.userId == null) {
-      return const CircularProgressIndicator();
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
     }
 
     return Scaffold(
@@ -22,7 +28,7 @@ class HomeScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () {
-              userProvider.clearUser(); // Deslogar o usuário
+              userProvider.clearUser();
             },
           ),
         ],
@@ -30,15 +36,20 @@ class HomeScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: FutureBuilder<String>(
-          future: CompanyController().fetchCompanyName(userProvider.userId!),  // Chama o controlador
+          future: CompanyController().fetchCompanyName(userProvider.userId!),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             }
 
             if (snapshot.hasError) {
-              return Center(child: Text('Erro ao carregar nome da empresa: ${snapshot.error}'));
+              // Erro no console, mas sem exibir na tela
+              debugPrint('Erro ao carregar nome da empresa: ${snapshot.error}');
+              return const Center(child: Text('Erro ao carregar nome da empresa.'));
             }
+
+            // Garantir que o nome da empresa seja uma string válida
+            String companyName = snapshot.data ?? 'Nome não encontrado';
 
             return ListView(
               children: [
@@ -54,7 +65,7 @@ class HomeScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Bem-vindo, ${snapshot.data}',  // Exibe o nome da empresa
+                          'Bem-vindo, $companyName',
                           style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: Colors.blueGrey,
@@ -70,16 +81,22 @@ class HomeScreen extends StatelessWidget {
                         const SizedBox(height: 20),
                         ElevatedButton(
                           onPressed: () {
-                            // Implementar navegação para a tela de estoque
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ProductCreationScreen(),
+                              ),
+                            );
                           },
                           style: ElevatedButton.styleFrom(
-                            minimumSize: const Size(double.infinity, 50), backgroundColor: Theme.of(context).primaryColor,
+                            minimumSize: const Size(double.infinity, 50),
+                            backgroundColor: Theme.of(context).primaryColor,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
                           ),
                           child: const Text(
-                            'Ir para Estoque',
+                            'Criar Novo Produto',
                             style: TextStyle(fontSize: 16),
                           ),
                         ),
@@ -88,12 +105,32 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                FloatingActionButton(
-                  onPressed: () {
-                    // Implementar ação para adicionar novo produto ou recurso
+                FutureBuilder<List<ProductModel>>(
+                  future: ProductController().fetchProducts(userProvider.userId!),
+                  builder: (context, productSnapshot) {
+                    if (productSnapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+
+                    if (productSnapshot.hasError) {
+                      // Erro no console, mas sem exibir na tela
+                      debugPrint('Erro ao carregar produtos: ${productSnapshot.error}');
+                      return const Center(child: Text('Erro ao carregar produtos.'));
+                    }
+
+                    final products = productSnapshot.data;
+                    if (products == null || products.isEmpty) {
+                      return const Center(
+                        child: Text('Nenhum produto encontrado.'),
+                      );
+                    }
+
+                    return Column(
+                      children: products.map((product) {
+                        return ProductCard(product);
+                      }).toList(),
+                    );
                   },
-                  tooltip: 'Adicionar Produto',
-                  child: const Icon(Icons.add),
                 ),
               ],
             );
