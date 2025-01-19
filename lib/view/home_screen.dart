@@ -43,12 +43,10 @@ class HomeScreen extends StatelessWidget {
             }
 
             if (snapshot.hasError) {
-              // Erro no console, mas sem exibir na tela
               debugPrint('Erro ao carregar nome da empresa: ${snapshot.error}');
               return const Center(child: Text('Erro ao carregar nome da empresa.'));
             }
 
-            // Garantir que o nome da empresa seja uma string válida
             String companyName = snapshot.data ?? 'Nome não encontrado';
 
             return ListView(
@@ -113,7 +111,6 @@ class HomeScreen extends StatelessWidget {
                     }
 
                     if (productSnapshot.hasError) {
-                      // Erro no console, mas sem exibir na tela
                       debugPrint('Erro ao carregar produtos: ${productSnapshot.error}');
                       return const Center(child: Text('Erro ao carregar produtos.'));
                     }
@@ -140,3 +137,5 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
+

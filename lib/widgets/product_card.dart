@@ -34,7 +34,12 @@ class ProductCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(model.name),
-                    Text('Estoque: ${model.stock}', style: TextStyle(color: Colors.grey)),
+                    Text(
+                      'Estoque: ${model.stock > 0 ? model.stock : 'Sem estoque'}',
+                      style: TextStyle(
+                        color: model.stock > 0 ? Colors.black : Colors.red,
+                      ),
+                    ),
                   ],
                 ),
               );

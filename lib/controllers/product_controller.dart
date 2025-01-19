@@ -13,16 +13,22 @@ class ProductController {
           .collection('products')
           .add(product.toMap());
     } catch (e) {
-      throw Exception("Erro ao salvar o produto: $e");
+      throw Exception("Erro ao salvar o produto: ${e.toString()}");
     }
   }
 
-  Future<void> saveModelProduct(ModelProduct model) async {
+  Future<void> saveModelProduct(
+      String companyId, String productId, ModelProduct model) async {
     try {
-      // Ajuste conforme o local onde os modelos são armazenados
-      await _firestore.collection('models').add(model.toMap());
+      await _firestore
+          .collection('companies')
+          .doc(companyId)
+          .collection('products')
+          .doc(productId)
+          .collection('models')
+          .add(model.toMap());
     } catch (e) {
-      throw Exception("Erro ao salvar o modelo: $e");
+      throw Exception("Erro ao salvar o modelo: ${e.toString()}");
     }
   }
 
@@ -33,22 +39,37 @@ class ProductController {
           .doc(companyId)
           .collection('products')
           .get();
+
       return snapshot.docs
-          .map((doc) => ProductModel.fromMap(doc.data()))
+          .map((doc) => ProductModel.fromMap({
+        ...doc.data(),
+        'id': doc.id, // Inclui o ID do documento, se necessário
+      }))
           .toList();
     } catch (e) {
-      throw Exception("Erro ao buscar produtos: $e");
+      throw Exception("Erro ao buscar produtos: ${e.toString()}");
     }
   }
 
-  Future<List<ModelProduct>> fetchModels() async {
+  Future<List<ModelProduct>> fetchModels(
+      String companyId, String productId) async {
     try {
-      final snapshot = await _firestore.collection('models').get();
+      final snapshot = await _firestore
+          .collection('companies')
+          .doc(companyId)
+          .collection('products')
+          .doc(productId)
+          .collection('models')
+          .get();
+
       return snapshot.docs
-          .map((doc) => ModelProduct.fromMap(doc.data()))
+          .map((doc) => ModelProduct.fromMap({
+        ...doc.data(),
+        'id': doc.id, // Inclui o ID do documento, se necessário
+      }))
           .toList();
     } catch (e) {
-      throw Exception("Erro ao buscar modelos: $e");
+      throw Exception("Erro ao buscar modelos: ${e.toString()}");
     }
   }
 }

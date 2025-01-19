@@ -24,10 +24,10 @@ class ModelProduct {
 
   static ModelProduct fromMap(Map<String, dynamic> map) {
     return ModelProduct(
-      id: map['id'],
-      name: map['name'],
-      color: map['color'],
-      observations: map['observations'],
+      id: map['id'] ?? '',
+      name: map['name'] ?? 'Sem Nome',
+      color: map['color'] ?? '',
+      observations: map['observations'] ?? '',
       stock: map['stock'] ?? 0,
     );
   }

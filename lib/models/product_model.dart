@@ -23,12 +23,15 @@ class ProductModel {
 
   static ProductModel fromMap(Map<String, dynamic> map) {
     return ProductModel(
-      id: map['id'],
-      name: map['name'],
-      observations: map['observations'],
-      models: (map['models'] as List)
+      id: map['id'] ?? '',
+      name: map['name'] ?? ' ',
+      observations: map['observations'] ?? '',
+      models: (map['models'] != null && map['models'] is List)
+          ? (map['models'] as List)
           .map((modelMap) => ModelProduct.fromMap(modelMap))
-          .toList(),
+          .toList()
+          : [],
     );
   }
+
 }
