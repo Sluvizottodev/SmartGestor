@@ -35,6 +35,8 @@ dependencies:
   # Formatação de números e datas
   intl: ^0.20.1
 
+  mockito: ^5.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
