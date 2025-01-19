@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:controle_vendas_e_estoque/controllers/auth_controller.dart';
 
+import '../../services/firebase_service.dart';
 import '../../utils/app_colors.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -67,7 +68,23 @@ class LoginScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () async {
+                    final email = _emailController.text;
+                    final password = _passwordController.text;
+
+                    if (email.isNotEmpty && password.isNotEmpty) {
+                      // Chama a função de login no AuthController
+                      await AuthController(firebaseService: FirebaseService()).signIn(
+                        context,
+                        email,
+                        password,
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("Por favor, preencha os campos")),
+                      );
+                    }
+                  },
                   child: const Center(
                     child: Text(
                       "Entrar",

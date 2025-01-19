@@ -6,7 +6,9 @@ import 'package:provider/provider.dart';
 import '../providers/user_provider.dart';
 
 class AuthController {
-  final FirebaseService _firebaseService = FirebaseService();
+  final FirebaseService _firebaseService;
+
+  AuthController({required FirebaseService firebaseService}) : _firebaseService = firebaseService;
 
   Future<void> registerUser(
       BuildContext context,
@@ -93,3 +95,4 @@ class AuthController {
     }
   }
 }
+
