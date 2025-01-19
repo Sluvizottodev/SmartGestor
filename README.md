@@ -1,16 +1,31 @@
-# controle_vendas_e_estoque
+# 🛍️ Controle de Vendas e Estoque
 
-App para gestão de estoque eficiente
+SmartGestor é um aplicativo moderno e funcional para gerenciar produtos, estoques, vendas e modelos associados, com integração ao Firebase. Ideal para pequenas e médias empresas que desejam organizar suas operações de forma prática e eficiente.
 
-## Getting Started
+## 🚀 Funcionalidades Principais
 
-This project is a starting point for a Flutter application.
+- **Gerenciamento de Produtos**: Cadastro, listagem e exclusão de produtos.
+- **Controle de Modelos**: Adicione modelos específicos para cada produto.
+- **Relatórios em Tempo Real**: Visualize e acompanhe os dados diretamente do Firebase Firestore.
+- **Design Responsivo**: Experiência de uso otimizada para diferentes tamanhos de tela.
 
-A few resources to get you started if this is your first Flutter project:
+## 🛠️ Tecnologias Utilizadas
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **Frontend**: Flutter
+- **Backend**: Firebase Firestore
+- **Linguagem de Programação**: Dart
+- **Gerenciamento de Estados**: Provider
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🗂️ Estrutura do Projeto
+
+```plaintext
+📂 assets/           # Recursos visuais
+📂 lib/
+├── 📂 models/       # Modelos de dados 
+├── 📂 controllers/  # Lógica de negócios 
+├── 📂 provider/     # Gerenciamento de estado
+├── 📂 service/      # Armazenamento e atualização de dados
+├── 📂 utils/        # Compartilhamento de padrões
+├── 📂 views/        # Telas 
+├── 📂 widgets/      # Widgets reutilizáveis
+└── main.dart        # Ponto de entrada do aplicativo
