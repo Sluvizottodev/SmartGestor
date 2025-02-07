@@ -1,3 +1,4 @@
+NÃO FINALIZADO
 # 🛍️ Controle de Vendas e Estoque
 
 SmartGestor é um aplicativo moderno e funcional para gerenciar produtos, estoques, vendas e modelos associados, com integração ao Firebase. Ideal para pequenas e médias empresas que desejam organizar suas operações de forma prática e eficiente.
